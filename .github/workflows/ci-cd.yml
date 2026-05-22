@@ -34,6 +34,8 @@ jobs:
 
       - name: Run tests
         run: |
+          export SKIP_MODEL_INIT=1
+          export PRODUCTION_MODEL=tfidf_logistic
           pytest tests/ -v --tb=short
 
   # Deploy is optional: add AZURE_CREDENTIALS + AZURE_WEBAPP_NAME secrets, then set ENABLE_AZURE_DEPLOY=true in repo Variables.

@@ -83,7 +83,7 @@ def _init_predictor() -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    if predictor is None and load_error is None:
+    if os.getenv("SKIP_MODEL_INIT") != "1" and predictor is None and load_error is None:
         _init_predictor()
     yield
 
