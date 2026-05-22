@@ -1,6 +1,5 @@
 """Minimal production FastAPI for Air Paradis sentiment analysis."""
 
-import json
 import os
 import sys
 import uuid
@@ -16,38 +15,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from models.predictor import SentimentPredictor
 
-DEBUG_LOG = Path(
-    os.getenv(
-        "DEBUG_LOG",
-        "/Users/laureendademeule/Documents/Projets/P7/.cursor/debug-448d12.log",
-    )
-)
-RUN_ID = os.getenv("RUN_ID", "azure-api")
-
 predictor: SentimentPredictor | None = None
 load_error: str | None = None
 load_debug: dict | None = None
 START_TIME = datetime.utcnow()
-
-
-def _agent_log(hypothesis_id: str, location: str, message: str, data: dict) -> None:
-    # #region agent log
-    try:
-        payload = {
-            "sessionId": "448d12",
-            "runId": RUN_ID,
-            "hypothesisId": hypothesis_id,
-            "location": location,
-            "message": message,
-            "data": data,
-            "timestamp": int(datetime.utcnow().timestamp() * 1000),
-        }
-        DEBUG_LOG.parent.mkdir(parents=True, exist_ok=True)
-        with DEBUG_LOG.open("a", encoding="utf-8") as fh:
-            fh.write(json.dumps(payload) + "\n")
-    except OSError:
-        pass
-    # #endregion
 
 
 def _init_predictor() -> None:
@@ -63,22 +34,14 @@ def _init_predictor() -> None:
         "bundle_exists": bundle.exists(),
         "marker_value": marker.read_text().strip() if marker.exists() else None,
     }
-    _agent_log("H1", "main.py:_init_predictor", "paths", load_debug)
     try:
         predictor = SentimentPredictor()
         if not predictor.bundle and predictor.bert_model is None and predictor.keras_model is None:
             raise RuntimeError("Model files found but bundle is empty after load")
         load_error = None
-        _agent_log(
-            "H2",
-            "main.py:_init_predictor",
-            "loaded",
-            {"model_name": predictor.model_name, "bundle_keys": list(predictor.bundle.keys())},
-        )
     except Exception as exc:
         predictor = None
         load_error = f"{type(exc).__name__}: {exc}"
-        _agent_log("H3", "main.py:_init_predictor", "load_failed", {"error": load_error})
 
 
 @asynccontextmanager
