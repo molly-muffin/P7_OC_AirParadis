@@ -103,7 +103,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_init_predictor()
+if os.getenv("SKIP_MODEL_INIT") != "1":
+    _init_predictor()
 
 
 class PredictRequest(BaseModel):

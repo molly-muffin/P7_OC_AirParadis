@@ -13,6 +13,7 @@ jobs:
     env:
       PRODUCTION_MODEL: tfidf_logistic
       RUN_ID: ci
+      SKIP_MODEL_INIT: "1"
 
     steps:
       - uses: actions/checkout@v4
