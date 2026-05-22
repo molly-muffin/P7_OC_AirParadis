@@ -6,20 +6,20 @@ RESOURCE_GROUP="${AZURE_RESOURCE_GROUP:-air-paradis-rg}"
 LOCATION="${AZURE_LOCATION:-westeurope}"
 APP_SERVICE_PLAN="${AZURE_APP_PLAN:-air-paradis-plan-f1}"
 WEB_APP_NAME="${AZURE_WEBAPP_NAME:-air-paradis-sentiment-laureenda}"
-PRODUCTION_MODEL="${AZURE_PRODUCTION_MODEL:-distilbert_finetuned}"
+PRODUCTION_MODEL="${AZURE_PRODUCTION_MODEL:-tfidf_logistic}"
 
 if ! command -v az >/dev/null 2>&1; then
   echo "Azure CLI required. From project venv: pip install azure-cli"
   exit 1
 fi
 
-if ! az account show >/dev/null 2>&1; then
-  echo "Run: az login"
+if ! bash scripts/check_azure_prereqs.sh; then
   exit 1
 fi
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
+if [ -f .env ]; then set -a; source .env; set +a; fi
 
 echo "[1/6] Resource group..."
 az group create --name "$RESOURCE_GROUP" --location "$LOCATION" --output none
@@ -61,21 +61,25 @@ az webapp config appsettings set \
   --settings $SETTINGS \
   --output none
 
-echo "[5/6] Zip package (code + models/production)..."
+echo "[5/6] Zip package (slim F1 bundle)..."
 ZIP="/tmp/air-paradis-deploy.zip"
 rm -f "$ZIP"
-zip -r "$ZIP" \
-  src/ \
-  models/production/ \
-  requirements.txt \
-  -x "*.pyc" "*__pycache__*" "*.keras" 2>/dev/null || true
+STAGING="/tmp/air-paradis-staging"
+rm -rf "$STAGING"
+mkdir -p "$STAGING/models/production"
 
-# Always include logistic bundle; include BERT only if selected
-if [ "$PRODUCTION_MODEL" = "tfidf_logistic" ]; then
-  zip -u "$ZIP" models/production/tfidf_logistic_bundle.pkl models/production/production_model.txt
-else
-  zip -r "$ZIP" models/production/distilbert_finetuned/ models/production/tfidf_logistic_bundle.pkl
+cp -r src "$STAGING/"
+cp deployment/requirements-azure.txt "$STAGING/requirements.txt"
+echo "$PRODUCTION_MODEL" > "$STAGING/models/production/production_model.txt"
+cp models/production/tfidf_logistic_bundle.pkl "$STAGING/models/production/"
+
+if [ "$PRODUCTION_MODEL" != "tfidf_logistic" ]; then
+  echo "WARNING: Non-logistic models may fail on F1 (RAM/build limits). Using $PRODUCTION_MODEL."
+  cp -r "models/production/${PRODUCTION_MODEL}" "$STAGING/models/production/" 2>/dev/null || true
 fi
+
+(cd "$STAGING" && zip -r "$ZIP" . -x "*.pyc" "*__pycache__*")
+echo "Package size: $(du -h "$ZIP" | cut -f1)"
 
 echo "[6/6] Zip deploy..."
 az webapp deploy \

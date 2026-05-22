@@ -2,6 +2,8 @@
 
 ## 1. Application Insights
 
+Prerequisite: Azure providers must be registered (script does this automatically on first run).
+
 1. Go to [portal.azure.com](https://portal.azure.com)
 2. Create resource > **Application Insights**
 3. Name: `air-paradis-insights`

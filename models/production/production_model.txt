@@ -1,1 +1,1 @@
-distilbert_finetuned
+tfidf_logistic

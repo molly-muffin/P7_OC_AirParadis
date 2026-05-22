@@ -22,8 +22,6 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 import pickle
 from pathlib import Path
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-import gensim
-from gensim.models import Word2Vec, FastText
 import emoji
 
 # Download required NLTK data
@@ -329,7 +327,8 @@ class TextPreprocessor:
             **kwargs: Additional arguments for Word2Vec
         """
         logger.info("Training Word2Vec model...")
-        
+        from gensim.models import Word2Vec
+
         default_params = {
             'vector_size': 300,
             'window': 5,
@@ -358,7 +357,8 @@ class TextPreprocessor:
             **kwargs: Additional arguments for FastText
         """
         logger.info("Training FastText model...")
-        
+        from gensim.models import FastText
+
         default_params = {
             'vector_size': 300,
             'window': 5,

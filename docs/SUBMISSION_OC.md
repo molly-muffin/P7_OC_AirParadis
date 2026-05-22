@@ -19,11 +19,11 @@ Files in `livrables/`:
 
 ## Before submitting
 
-- [ ] Azure API URL works (`/health`, `/predict`)
-- [ ] GitHub repo link in README
-- [ ] Blog updated with final metrics and screenshots
-- [ ] Presentation converted to PDF/PPTX with screenshots
-- [ ] All 6 zips regenerated after final training
+- [ ] Azure API URL works (`/health`, `/predict`) — run `bash scripts/finish_deployment.sh` after `az login`
+- [ ] GitHub repo link in README — run `gh auth login` then `bash scripts/setup_github.sh URL && git push`
+- [x] Blog updated with final 50k metrics and local screenshots
+- [ ] Presentation converted to PDF/PPTX with Azure/GitHub screenshots
+- [x] All 6 zips + global zip regenerated (`livrables/Realisez_une_analyse_de_sentiments_Demeule_Laureenda.zip`)
 
 ## Platform
 

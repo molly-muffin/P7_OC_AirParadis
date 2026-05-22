@@ -1,4 +1,5 @@
-# Minimal dependencies for GitHub Actions CI (pytest only, Python 3.11)
+# Minimal deps for Azure F1 API (tfidf_logistic production model)
+# Must match pickle format: bundle trained with numpy 2.x locally
 fastapi==0.101.0
 uvicorn==0.23.2
 pydantic==2.1.1
@@ -7,11 +8,7 @@ numpy>=2.0.0,<2.3
 scipy>=1.11.0,<1.15
 scikit-learn>=1.5.0,<1.7
 joblib>=1.3.0
-pandas>=2.0.0,<2.3
 nltk==3.8.1
-emoji
 azure-monitor-opentelemetry>=1.2.0
 opentelemetry-api>=1.20.0
 python-multipart==0.0.6
-pytest==7.4.0
-httpx>=0.25.0

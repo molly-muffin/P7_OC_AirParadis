@@ -10,6 +10,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PRODUCTION_MODEL: tfidf_logistic
+      RUN_ID: ci
 
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +29,7 @@ jobs:
 
       - name: Download NLTK data
         run: |
-          python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
+          python -c "import nltk; nltk.download('punkt'); nltk.download('punkt_tab'); nltk.download('stopwords'); nltk.download('wordnet')"
 
       - name: Run tests
         run: |

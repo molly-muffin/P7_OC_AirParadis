@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import pickle
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
@@ -24,6 +25,9 @@ class SentimentPredictor:
         self._load()
 
     def _read_production_marker(self) -> str:
+        env_model = os.getenv("PRODUCTION_MODEL")
+        if env_model:
+            return env_model.strip()
         marker = PRODUCTION_DIR / "production_model.txt"
         if marker.exists():
             return marker.read_text().strip()
