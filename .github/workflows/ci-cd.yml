@@ -5,6 +5,7 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -32,10 +33,11 @@ jobs:
         run: |
           pytest tests/ -v --tb=short
 
+  # Deploy is optional: add AZURE_CREDENTIALS + AZURE_WEBAPP_NAME secrets, then set ENABLE_AZURE_DEPLOY=true in repo Variables.
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.ENABLE_AZURE_DEPLOY == 'true'
     environment: production
 
     steps:
@@ -47,8 +49,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
-        if: ${{ secrets.AZURE_WEBAPP_NAME != '' }}
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          images: ${{ secrets.AZURE_WEBAPP_IMAGE }}
+          package: .

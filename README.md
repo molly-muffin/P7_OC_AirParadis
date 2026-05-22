@@ -78,12 +78,21 @@ pytest tests/ -v
 
 ## Déploiement Azure (Web App F1)
 
+**API production :** https://air-paradis-sentiment-P7.azurewebsites.net
+
+- Health : https://air-paradis-sentiment-P7.azurewebsites.net/health
+- Docs : https://air-paradis-sentiment-P7.azurewebsites.net/docs
+
+**Code source :** https://github.com/molly-muffin/P7_OC_AirParadis
+
 ```bash
 az login
 ./deployment/deploy_azure.sh
 ```
 
 Variables requises : `APPLICATIONINSIGHTS_CONNECTION_STRING`, secrets GitHub `AZURE_CREDENTIALS`, `AZURE_WEBAPP_NAME`.
+
+CI/CD : le job `test` (pytest) tourne à chaque push. Le job `deploy` est désactivé par défaut ; activer avec la variable repo `ENABLE_AZURE_DEPLOY=true` après configuration des secrets.
 
 ## Résultats (échantillon 50k tweets, split 60/20/20)
 
