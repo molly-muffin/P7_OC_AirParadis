@@ -1,7 +1,7 @@
 # Local API smoke test (run API first: uvicorn src.api.main:app --port 8000)
 
 $ curl -s -m 5 http://localhost:8000/health
-{"status":"healthy","model_loaded":true,"model":"distilbert_finetuned","uptime_seconds":1360.470645}
+{"status":"healthy","model_loaded":true,"model":"distilbert_finetuned","uptime_seconds":11928.524792}
 
 $ curl -s -m 5 http://localhost:8000/predict -X POST -H Content-Type: application/json -d {"text":"I love Air Paradis!"}
-{"sentiment":"positive","confidence":0.9278,"model":"distilbert_finetuned","prediction_id":"2c0e4333-2438-4e0d-affa-acffcd0ed4a0"}
+{"sentiment":"positive","confidence":0.9278,"model":"distilbert_finetuned","prediction_id":"62b6acd4-a915-426a-9cdd-e5891a36ad7d"}

@@ -75,7 +75,62 @@ def capture_api_curl() -> None:
     print("Wrote api_curl_local.txt")
 
 
+def write_mlflow_runs_table() -> None:
+    """Render an MLflow-style runs table from model_comparison.json."""
+    results_path = ROOT / "models" / "production" / "model_comparison.json"
+    if not results_path.exists():
+        print("Skip MLflow table: model_comparison.json missing")
+        return
+
+    data = json.loads(results_path.read_text())
+    rows = []
+    for r in data:
+        rows.append(
+            [
+                r["model"],
+                r.get("approach", ""),
+                f"{float(r.get('val_f1', 0)) * 100:.1f}%",
+                f"{float(r.get('test_accuracy', 0)) * 100:.1f}%",
+                f"{float(r.get('test_f1', 0)) * 100:.1f}%",
+            ]
+        )
+
+    try:
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots(figsize=(11, 3.5))
+        ax.axis("off")
+        col_labels = ["Run name", "Approach", "Val F1", "Test Acc", "Test F1"]
+        table = ax.table(
+            cellText=rows,
+            colLabels=col_labels,
+            loc="center",
+            cellLoc="center",
+        )
+        table.auto_set_font_size(False)
+        table.set_fontsize(9)
+        table.scale(1, 1.6)
+        for (row, col), cell in table.get_celld().items():
+            if row == 0:
+                cell.set_facecolor("#0194E2")
+                cell.set_text_props(color="white", weight="bold")
+            elif rows[row - 1][0] == "distilbert_finetuned":
+                cell.set_facecolor("#FFF3CD")
+        ax.set_title("MLflow — Experiment runs (50k sample)", fontsize=12, pad=20)
+        fig.tight_layout()
+        fig.savefig(OUT / "mlflow_ui_runs.png", dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        print(f"Wrote {OUT / 'mlflow_ui_runs.png'}")
+    except ImportError:
+        lines = ["Run name | Approach | Val F1 | Test Acc | Test F1"]
+        for row in rows:
+            lines.append(" | ".join(row))
+        (OUT / "mlflow_ui_runs.txt").write_text("\n".join(lines))
+        print("matplotlib missing; wrote mlflow_ui_runs.txt")
+
+
 if __name__ == "__main__":
     write_metrics_chart()
+    write_mlflow_runs_table()
     capture_pytest()
     capture_api_curl()

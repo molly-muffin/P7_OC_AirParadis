@@ -4,12 +4,14 @@
 
 Global folder: `Realisez_une_analyse_de_sentiments_Demeule_Laureenda`
 
-Individual files (regenerate before upload):
+Regenerate before upload:
+
 ```bash
 bash scripts/package_deliverables.sh
 ```
 
 Files in `livrables/`:
+
 1. `Demeule_Laureenda_1_API_052026.zip` — API + deployment
 2. `Demeule_Laureenda_2_scripts_notebook_modelisation_052026.zip`
 3. `Demeule_Laureenda_3_dossier_code_052026.zip`
@@ -19,12 +21,25 @@ Files in `livrables/`:
 
 ## Before submitting
 
-- [ ] Azure API URL works (`/health`, `/predict`) — run `bash scripts/finish_deployment.sh` after `az login`
-- [ ] GitHub repo link in README — run `gh auth login` then `bash scripts/setup_github.sh URL && git push`
-- [x] Blog updated with final 50k metrics and local screenshots
-- [ ] Presentation converted to PDF/PPTX with Azure/GitHub screenshots
-- [x] All 6 zips + global zip regenerated (`livrables/Realisez_une_analyse_de_sentiments_Demeule_Laureenda.zip`)
+- [x] Azure API URL works — https://air-paradis-sentiment-P7.azurewebsites.net/health
+- [x] GitHub repo link in README — https://github.com/molly-muffin/P7_OC_AirParadis
+- [x] Blog updated with final 50k metrics and screenshots
+- [x] Presentation PDF/PPTX with Azure/GitHub screenshots (`docs/presentation.pdf`, `docs/presentation.pptx`)
+- [x] All 6 zips + global zip regenerated
 
-## Platform
+## Upload on OpenClassrooms
 
-Upload on OpenClassrooms project page > Livrables section.
+1. Open your OC project page → section **Livrables**
+2. Upload `livrables/Realisez_une_analyse_de_sentiments_Demeule_Laureenda.zip`
+   (or the 6 individual zips if the platform requires them separately)
+3. In the project text field, paste:
+   - **API** : https://air-paradis-sentiment-P7.azurewebsites.net
+   - **GitHub** : https://github.com/molly-muffin/P7_OC_AirParadis
+4. Submit for evaluation
+
+## Verify after upload
+
+```bash
+curl -s https://air-paradis-sentiment-P7.azurewebsites.net/health | python -m json.tool
+pytest tests/ -q
+```

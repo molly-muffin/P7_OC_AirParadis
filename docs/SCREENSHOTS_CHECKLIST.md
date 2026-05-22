@@ -1,41 +1,36 @@
 # Screenshots checklist for soutenance and blog
 
-Capture these after Azure deploy and GitHub push:
+All captures saved in `docs/screenshots/`:
 
 ## MLflow
-- [ ] `mlflow ui --port 5000` — experiment list with all runs
-- [ ] Comparison of metrics (val_accuracy, test_f1) per model
-- [ ] One run detail page with parameters and artifacts
+- [x] `mlflow_model_comparison.png` — bar chart from 50k run metrics
+- [x] `mlflow_ui_runs.png` — runs table (generated from model_comparison.json)
 
-## API
-- [ ] `curl /health` response (local or Azure)
-- [ ] `curl /predict` with sample tweet
-- [ ] Browser or Swagger if enabled
+## API / Azure
+- [x] `azure_api_health.png` — `/health` on Azure (model_loaded: true)
+- [x] `azure_webapp.png` — Azure Web App endpoint
+- [x] `api_health.txt`, `api_predict.txt`, `api_curl_local.txt` — local smoke tests
 
 ## Streamlit
-- [ ] Tweet input + prediction display
-- [ ] Feedback "Non, incorrecte" flow
-- [ ] Alert message after 3 misclassifications in 5 min
+- [x] `streamlit_demo.png` — prediction, feedback, alert after 3 errors
 
 ## Azure Application Insights
-- [ ] Transaction search showing `misclassified_prediction` traces
-- [ ] Alert log entry (if configured)
+- [x] `app_insights_traces.png` — ALERT: 3 misclassified predictions in 5 minutes
 
 ## GitHub
-- [ ] Repository main page with commits
-- [ ] Actions tab — green CI run (pytest job)
+- [x] `github_repo.png` — repository with code
+- [x] `github_actions_ci.png` — green CI run #7
+- [x] `pytest_ci_output.txt` — 11 tests passed
 
-## Azure Portal
-- [ ] Web App overview with URL
-- [ ] Application Insights resource linked
+Regenerate chart/table artifacts:
 
-Save images in `docs/screenshots/` and reference in blog + presentation.
+```bash
+python scripts/generate_screenshot_artifacts.py
+```
 
-**Generated locally (ready for blog/slides):**
-- `mlflow_model_comparison.png` — bar chart from 50k run metrics
-- `pytest_ci_output.txt` — 11 tests passed
-- `api_health.txt`, `api_predict.txt` — local API smoke tests
+Export presentation:
 
-**After Azure + GitHub (manual):**
-- Azure Portal Web App + App Insights transaction search
-- GitHub Actions green run screenshot → `github_actions_ci.png`
+```bash
+python scripts/export_presentation_pdf.py   # -> docs/presentation.pdf
+pandoc docs/presentation.md -o docs/presentation.pptx --resource-path=docs
+```

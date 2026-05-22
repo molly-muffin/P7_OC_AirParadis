@@ -28,10 +28,10 @@ Split des données : **60 % train / 20 % validation / 20 % test**
 ## Slide 3 — Approche 1 : Modèles simples
 
 - TF-IDF (5000 features)
-- Régression logistique : ~79 % accuracy (dataset complet)
-- Random Forest : F1 test ~74 %
+- Régression logistique : F1 test ~76,4 % (50k)
+- Random Forest : F1 test ~72,5 %
 
-Avantages : rapide, léger, interprétable.
+Avantages : rapide, léger, interprétable. Utilisé en production sur Azure F1.
 
 ---
 
@@ -41,17 +41,17 @@ Avantages : rapide, léger, interprétable.
 - Embeddings : Word2Vec vs GloVe
 - Early stopping sur validation
 
-Performances modérées sur petit échantillon ; s'améliore avec plus de données.
+Word2Vec ~65,7 % F1, GloVe ~69,4 % F1 sur 50k tweets.
 
 ---
 
 ## Slide 5 — Approche 3 : BERT
 
 - DistilBERT fine-tuned
-- 2 epochs, échantillon stratifié
-- **Meilleur modèle : 76,5 % test accuracy, 75,8 % F1**
+- 2 epochs, échantillon stratifié 50k
+- **Meilleur modèle entraîné : 81,5 % test accuracy, 81,5 % F1**
 
-Sélectionné pour la production.
+Sélectionné comme modèle de référence ; fallback logistic sur Azure F1 (mémoire).
 
 ---
 
@@ -65,9 +65,9 @@ Sélectionné pour la production.
 | CNN-LSTM GloVe | 69,4 % |
 | **DistilBERT** | **81,5 %** |
 
-![Comparaison MLflow](../screenshots/mlflow_model_comparison.png)
+![Comparaison MLflow](screenshots/mlflow_model_comparison.png)
 
-*[Capture écran MLflow UI — voir aussi `docs/screenshots/pytest_ci_output.txt` pour CI locale]*
+![MLflow UI — runs](screenshots/mlflow_ui_runs.png)
 
 ---
 
@@ -79,27 +79,29 @@ Sélectionné pour la production.
 - **CI/CD** : GitHub Actions
 - **Monitoring** : Azure Application Insights
 
+![GitHub Actions CI](screenshots/github_actions_ci.png)
+
 ---
 
 ## Slide 8 — Mise en production
 
 - API FastAPI : `/predict`, `/health`, `/feedback`
 - Déploiement : Azure Web App F1
-- Docker : `deployment/Dockerfile`
-- Fallback : logistic regression si limites F1
+- Modèle déployé : `tfidf_logistic` (contrainte F1)
+- DistilBERT = meilleur modèle entraîné (MLflow)
 
-*[Capture écran API cloud + curl]*
+![API Azure /health](screenshots/azure_api_health.png)
 
 ---
 
 ## Slide 9 — Interface Streamlit
 
-- Saisie tweet → appel API → prédiction
+- Saisie tweet → appel API cloud → prédiction
 - Validation utilisateur (Oui / Non)
 - Trace App Insights si erreur
 - Alerte : 3 erreurs / 5 min
 
-*[Capture écran Streamlit]*
+![Streamlit](screenshots/streamlit_demo.png)
 
 ---
 
@@ -109,7 +111,7 @@ Sélectionné pour la production.
 - Alertes configurées dans App Insights
 - Boucle d'amélioration : collecte → analyse → réentraînement → MLflow compare → promotion
 
-*[Capture écran Azure Application Insights]*
+![Application Insights](screenshots/app_insights_traces.png)
 
 ---
 
@@ -118,12 +120,14 @@ Sélectionné pour la production.
 1. Tweet positif → prédiction positive
 2. Tweet négatif → prédiction négative
 3. Feedback incorrect → trace App Insights
+4. GitHub Actions vert (11 tests)
 
 ---
 
 ## Slide 12 — Conclusion
 
-- DistilBERT = meilleur modèle pour ce cas
+- DistilBERT = meilleur modèle entraîné (81,5 % F1)
+- TF-IDF logistic = modèle déployé sur Azure F1
 - MLOps opérationnel (tracking, CI, monitoring)
 - Piste d'évolution : plus de données, active learning via feedback
 
@@ -131,7 +135,8 @@ Sélectionné pour la production.
 
 ## Annexes pour l'évaluateur
 
-- Repo : `air-paradis-sentiment/`
+- Repo : https://github.com/molly-muffin/P7_OC_AirParadis
+- API : https://air-paradis-sentiment-P7.azurewebsites.net
 - Notebooks : `notebooks/`
 - Blog : `blog/article_mlops_sentiment.md`
 - Commandes : voir `README.md`

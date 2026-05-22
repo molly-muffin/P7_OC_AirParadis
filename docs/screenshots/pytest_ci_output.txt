@@ -1,7 +1,8 @@
 ============================= test session starts ==============================
-platform darwin -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/laureendademeule/Documents/Projets/P7/.venv/bin/python
+platform darwin -- Python 3.13.2, pytest-7.4.0, pluggy-1.6.0 -- /Users/laureendademeule/Documents/Projets/P7/.venv/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment
+configfile: pytest.ini
 plugins: anyio-4.13.0
 collecting ... collected 11 items
 
@@ -18,30 +19,12 @@ tests/test_preprocessing.py::test_clean_text_lowercase PASSED            [ 90%]
 tests/test_preprocessing.py::test_clean_text_removes_mention PASSED      [100%]
 
 =============================== warnings summary ===============================
-src/api/main.py:31
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+tests/test_api.py::test_health_endpoint
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:21: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
     START_TIME = datetime.utcnow()
 
-src/api/main.py:52
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:52: DeprecationWarning: 
-          on_event is deprecated, use lifespan event handlers instead.
-  
-          Read more about it in the
-          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
-    @app.on_event("startup")
-
-../.venv/lib/python3.13/site-packages/fastapi/applications.py:4598
-  /Users/laureendademeule/Documents/Projets/P7/.venv/lib/python3.13/site-packages/fastapi/applications.py:4598: DeprecationWarning: 
-          on_event is deprecated, use lifespan event handlers instead.
-  
-          Read more about it in the
-          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-          
-    return self.router.on_event(event_type)  # ty: ignore[deprecated]
-
 tests/test_api.py::test_health_endpoint
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:68: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:99: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
     "uptime_seconds": (datetime.utcnow() - START_TIME).total_seconds(),
 
 tests/test_api.py::test_feedback_endpoint
@@ -78,4 +61,4 @@ tests/test_monitoring.py::test_alert_threshold
     datetime.utcnow() - timedelta(minutes=1) for _ in range(3)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 11 passed, 19 warnings in 10.45s =======================
+======================= 11 passed, 17 warnings in 7.86s ========================
