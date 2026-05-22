@@ -1,0 +1,2 @@
+$ curl http://127.0.0.1:8000/health
+{"status":"healthy","model_loaded":true,"model":"distilbert_finetuned","uptime_seconds":1381.354072}

@@ -1,0 +1,81 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0 -- /Users/laureendademeule/Documents/Projets/P7/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment
+plugins: anyio-4.13.0
+collecting ... collected 11 items
+
+tests/test_api.py::test_health_endpoint PASSED                           [  9%]
+tests/test_api.py::test_predict_endpoint PASSED                          [ 18%]
+tests/test_api.py::test_predict_empty_text_rejected PASSED               [ 27%]
+tests/test_api.py::test_feedback_endpoint PASSED                         [ 36%]
+tests/test_models.py::test_load_cleaned_dataset_splits PASSED            [ 45%]
+tests/test_models.py::test_load_cleaned_dataset_stratified PASSED        [ 54%]
+tests/test_monitoring.py::test_track_misclassification_without_connection_string PASSED [ 63%]
+tests/test_monitoring.py::test_alert_threshold PASSED                    [ 72%]
+tests/test_preprocessing.py::test_clean_text_removes_url PASSED          [ 81%]
+tests/test_preprocessing.py::test_clean_text_lowercase PASSED            [ 90%]
+tests/test_preprocessing.py::test_clean_text_removes_mention PASSED      [100%]
+
+=============================== warnings summary ===============================
+src/api/main.py:31
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    START_TIME = datetime.utcnow()
+
+src/api/main.py:52
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:52: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+../.venv/lib/python3.13/site-packages/fastapi/applications.py:4598
+  /Users/laureendademeule/Documents/Projets/P7/.venv/lib/python3.13/site-packages/fastapi/applications.py:4598: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+tests/test_api.py::test_health_endpoint
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:68: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "uptime_seconds": (datetime.utcnow() - START_TIME).total_seconds(),
+
+tests/test_api.py::test_feedback_endpoint
+tests/test_monitoring.py::test_track_misclassification_without_connection_string
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "timestamp": datetime.utcnow().isoformat(),
+
+tests/test_api.py::test_feedback_endpoint
+tests/test_monitoring.py::test_track_misclassification_without_connection_string
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:63: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    _misclassification_buffer.append(datetime.utcnow())
+
+tests/test_api.py::test_feedback_endpoint
+tests/test_monitoring.py::test_track_misclassification_without_connection_string
+tests/test_monitoring.py::test_track_misclassification_without_connection_string
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:65: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    ts for ts in _misclassification_buffer if ts > datetime.utcnow() - timedelta(minutes=5)
+
+tests/test_api.py::test_feedback_endpoint
+tests/test_monitoring.py::test_alert_threshold
+tests/test_monitoring.py::test_alert_threshold
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:73: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    cutoff = datetime.utcnow() - timedelta(minutes=window_minutes)
+
+tests/test_models.py::test_load_cleaned_dataset_splits
+tests/test_models.py::test_load_cleaned_dataset_stratified
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/data/cleaned_loader.py:47: DeprecationWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+    .apply(lambda x: x.sample(min(len(x), sample_size // 2), random_state=random_state))
+
+tests/test_monitoring.py::test_alert_threshold
+tests/test_monitoring.py::test_alert_threshold
+tests/test_monitoring.py::test_alert_threshold
+  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/tests/test_monitoring.py:26: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    datetime.utcnow() - timedelta(minutes=1) for _ in range(3)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 11 passed, 19 warnings in 10.45s =======================

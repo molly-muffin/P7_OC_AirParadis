@@ -1,0 +1,3 @@
+$ curl -X POST /predict
+{"sentiment":"positive","confidence":0.9278,"model":"distilbert_finetuned","prediction_id":"31b26a00-045a-43aa-8d3d-6f442f4eadc3"}
+{"sentiment":"negative","confidence":0.9245,"model":"distilbert_finetuned","prediction_id":"418a0c1b-aa48-46f9-956f-2419e1a188b7"}

@@ -1,0 +1,60 @@
+[
+  {
+    "model": "tfidf_logistic",
+    "val_accuracy": 0.7681,
+    "val_precision": 0.7657086223984143,
+    "val_recall": 0.7726,
+    "val_f1": 0.76913887506222,
+    "test_accuracy": 0.7637,
+    "test_precision": 0.7633313361294188,
+    "test_recall": 0.7644,
+    "test_f1": 0.7638652942939942
+  },
+  {
+    "model": "tfidf_random_forest",
+    "val_accuracy": 0.7093,
+    "val_precision": 0.687309826382674,
+    "val_recall": 0.768,
+    "val_f1": 0.7254179654293,
+    "test_accuracy": 0.709,
+    "test_precision": 0.6876795977011494,
+    "test_recall": 0.7658,
+    "test_f1": 0.7246404239212718
+  },
+  {
+    "model": "cnn_lstm_word2vec",
+    "val_accuracy": 0.6695,
+    "val_precision": 0.6913524497629262,
+    "val_recall": 0.6124,
+    "val_f1": 0.649485629441086,
+    "test_accuracy": 0.6771,
+    "test_precision": 0.701204271756419,
+    "test_recall": 0.6172,
+    "test_f1": 0.6565259014998405,
+    "bundle_path": "/Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/models/production/cnn_lstm_word2vec_bundle.pkl"
+  },
+  {
+    "model": "cnn_lstm_glove",
+    "val_accuracy": 0.7063,
+    "val_precision": 0.7392716307121318,
+    "val_recall": 0.6374,
+    "val_f1": 0.6845666416067018,
+    "test_accuracy": 0.7141,
+    "test_precision": 0.7456965802157448,
+    "test_recall": 0.6498,
+    "test_f1": 0.6944533504328311,
+    "bundle_path": "/Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/models/production/cnn_lstm_glove_bundle.pkl"
+  },
+  {
+    "model": "distilbert_finetuned",
+    "val_accuracy": 0.8025,
+    "val_precision": 0.8040201005025126,
+    "val_recall": 0.8,
+    "val_f1": 0.8020050125313283,
+    "test_accuracy": 0.81475,
+    "test_precision": 0.8155388471177945,
+    "test_recall": 0.8135,
+    "test_f1": 0.8145181476846057,
+    "model_dir": "/Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/models/production/distilbert_finetuned"
+  }
+]
