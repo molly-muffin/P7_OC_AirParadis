@@ -9,8 +9,6 @@ from fastapi.testclient import TestClient
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from api.main import app
-
 
 @pytest.fixture
 def client():
@@ -20,6 +18,8 @@ def client():
     mock_predictor.info.return_value = {"model_name": "test_model"}
 
     with patch("api.main.predictor", mock_predictor):
+        from api.main import app
+
         yield TestClient(app)
 
 
@@ -46,11 +46,14 @@ def test_predict_empty_text_rejected(client):
 
 
 def test_feedback_endpoint(client):
+    predict = client.post("/predict", json={"text": "bad flight"})
+    assert predict.status_code == 200
+    pred = predict.json()
     response = client.post(
         "/feedback",
         json={
             "text": "bad flight",
-            "predicted_sentiment": "positive",
+            "predicted_sentiment": pred["sentiment"],
             "actual_sentiment": "negative",
         },
     )

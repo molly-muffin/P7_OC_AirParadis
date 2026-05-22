@@ -36,7 +36,15 @@ jobs:
         run: |
           export SKIP_MODEL_INIT=1
           export PRODUCTION_MODEL=tfidf_logistic
-          pytest tests/ -v --tb=short
+          export PYTHONPATH=src
+          pytest tests/ -v --tb=long 2>&1 | tee pytest-output.txt
+
+      - name: Upload pytest log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-output
+          path: pytest-output.txt
 
   # Deploy is optional: add AZURE_CREDENTIALS + AZURE_WEBAPP_NAME secrets, then set ENABLE_AZURE_DEPLOY=true in repo Variables.
   deploy:
