@@ -74,8 +74,14 @@ echo "$PRODUCTION_MODEL" > "$STAGING/models/production/production_model.txt"
 cp models/production/tfidf_logistic_bundle.pkl "$STAGING/models/production/"
 
 if [ "$PRODUCTION_MODEL" != "tfidf_logistic" ]; then
-  echo "WARNING: Non-logistic models may fail on F1 (RAM/build limits). Using $PRODUCTION_MODEL."
-  cp -r "models/production/${PRODUCTION_MODEL}" "$STAGING/models/production/" 2>/dev/null || true
+  echo "Packaging model: $PRODUCTION_MODEL"
+  # Bundle (.pkl)
+  cp "models/production/${PRODUCTION_MODEL}_bundle.pkl" "$STAGING/models/production/" 2>/dev/null || true
+  # Keras file (.keras) for CNN-LSTM models
+  cp "models/production/${PRODUCTION_MODEL}.keras" "$STAGING/models/production/" 2>/dev/null || true
+  # Directory-based models (distilbert_finetuned/)
+  [ -d "models/production/${PRODUCTION_MODEL}" ] && \
+    cp -r "models/production/${PRODUCTION_MODEL}" "$STAGING/models/production/" 2>/dev/null || true
 fi
 
 (cd "$STAGING" && zip -r "$ZIP" . -x "*.pyc" "*__pycache__*")

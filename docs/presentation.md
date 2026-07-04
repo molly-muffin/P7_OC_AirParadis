@@ -87,8 +87,9 @@ Sélectionné comme modèle de référence ; fallback logistic sur Azure F1 (mé
 
 - API FastAPI : `/predict`, `/health`, `/feedback`
 - Déploiement : Azure Web App F1
-- Modèle déployé : `tfidf_logistic` (contrainte F1)
-- DistilBERT = meilleur modèle entraîné (MLflow)
+- Modèle déployé : `cnn_lstm_glove` (Modèle sur mesure avancé — 5 Mo)
+- DistilBERT = meilleur modèle entraîné, trop lourd pour F1 (~250 Mo)
+- Fallback automatique : `tfidf_logistic` si TensorFlow indisponible
 
 ![API Azure /health](screenshots/azure_api_health.png)
 
@@ -127,9 +128,9 @@ Sélectionné comme modèle de référence ; fallback logistic sur Azure F1 (mé
 ## Slide 12 — Conclusion
 
 - DistilBERT = meilleur modèle entraîné (81,5 % F1)
-- TF-IDF logistic = modèle déployé sur Azure F1
-- MLOps opérationnel (tracking, CI, monitoring)
-- Piste d'évolution : plus de données, active learning via feedback
+- CNN-LSTM + GloVe = modèle sur mesure avancé déployé (69,4 % F1, 5 Mo)
+- MLOps opérationnel (tracking, CI, monitoring, alertes)
+- Piste d'évolution : données augmentées via feedback App Insights, active learning
 
 ---
 

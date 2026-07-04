@@ -49,7 +49,11 @@ class SentimentPredictor:
             if self.bundle.get("model_type") == "keras_cnn_lstm":
                 import tensorflow as tf
 
-                self.keras_model = tf.keras.models.load_model(self.bundle["model_path"])
+                stored_path = self.bundle["model_path"]
+                # Stored path may be absolute (local training machine); resolve to production dir if missing
+                if not Path(stored_path).exists():
+                    stored_path = str(PRODUCTION_DIR / Path(stored_path).name)
+                self.keras_model = tf.keras.models.load_model(stored_path)
             return
 
         sklearn_path = PRODUCTION_DIR / "tfidf_logistic_bundle.pkl"

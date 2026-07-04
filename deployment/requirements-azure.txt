@@ -1,8 +1,9 @@
-# Minimal deps for Azure F1 API (tfidf_logistic production model)
+# API dependencies for Azure Web App
+# Supports both tfidf_logistic (lightweight) and cnn_lstm_* (needs TensorFlow)
 # Must match pickle format: bundle trained with numpy 2.x locally
-fastapi==0.101.0
-uvicorn==0.23.2
-pydantic==2.1.1
+fastapi>=0.101.0,<0.112
+uvicorn>=0.23.2,<0.30
+pydantic>=2.4.0,<2.10
 python-dotenv==1.0.0
 numpy>=2.0.0,<2.3
 scipy>=1.11.0,<1.15
@@ -11,4 +12,6 @@ joblib>=1.3.0
 nltk==3.8.1
 azure-monitor-opentelemetry>=1.2.0
 opentelemetry-api>=1.20.0
-python-multipart==0.0.6
+python-multipart>=0.0.9
+# TensorFlow for CNN-LSTM models (comment out if deploying tfidf_logistic only on F1)
+tensorflow-cpu>=2.12.0,<3.0
