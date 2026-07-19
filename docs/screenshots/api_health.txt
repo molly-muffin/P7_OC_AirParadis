@@ -1,2 +1,2 @@
-$ curl http://127.0.0.1:8000/health
-{"status":"healthy","model_loaded":true,"model":"distilbert_finetuned","uptime_seconds":1381.354072}
+$ curl https://air-paradis-sentiment-P7.azurewebsites.net/health
+{"status":"healthy","model_loaded":true,"model":"cnn_lstm_glove","load_error":null,"load_debug":{"root":"/tmp/8ded9f675caf8e3","production_dir_exists":true,"marker_exists":true,"bundle_exists":true,"marker_value":"cnn_lstm_glove"},"uptime_seconds":3680.331028}

@@ -18,47 +18,4 @@ tests/test_preprocessing.py::test_clean_text_removes_url PASSED          [ 81%]
 tests/test_preprocessing.py::test_clean_text_lowercase PASSED            [ 90%]
 tests/test_preprocessing.py::test_clean_text_removes_mention PASSED      [100%]
 
-=============================== warnings summary ===============================
-tests/test_api.py::test_health_endpoint
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:21: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-    START_TIME = datetime.utcnow()
-
-tests/test_api.py::test_health_endpoint
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/api/main.py:99: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-    "uptime_seconds": (datetime.utcnow() - START_TIME).total_seconds(),
-
-tests/test_api.py::test_feedback_endpoint
-tests/test_monitoring.py::test_track_misclassification_without_connection_string
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-    "timestamp": datetime.utcnow().isoformat(),
-
-tests/test_api.py::test_feedback_endpoint
-tests/test_monitoring.py::test_track_misclassification_without_connection_string
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:63: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-    _misclassification_buffer.append(datetime.utcnow())
-
-tests/test_api.py::test_feedback_endpoint
-tests/test_monitoring.py::test_track_misclassification_without_connection_string
-tests/test_monitoring.py::test_track_misclassification_without_connection_string
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:65: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-    ts for ts in _misclassification_buffer if ts > datetime.utcnow() - timedelta(minutes=5)
-
-tests/test_api.py::test_feedback_endpoint
-tests/test_monitoring.py::test_alert_threshold
-tests/test_monitoring.py::test_alert_threshold
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/monitoring/app_insights.py:73: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-    cutoff = datetime.utcnow() - timedelta(minutes=window_minutes)
-
-tests/test_models.py::test_load_cleaned_dataset_splits
-tests/test_models.py::test_load_cleaned_dataset_stratified
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/src/data/cleaned_loader.py:47: DeprecationWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-    .apply(lambda x: x.sample(min(len(x), sample_size // 2), random_state=random_state))
-
-tests/test_monitoring.py::test_alert_threshold
-tests/test_monitoring.py::test_alert_threshold
-tests/test_monitoring.py::test_alert_threshold
-  /Users/laureendademeule/Documents/Projets/P7/air-paradis-sentiment/tests/test_monitoring.py:26: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-    datetime.utcnow() - timedelta(minutes=1) for _ in range(3)
-
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 11 passed, 17 warnings in 7.86s ========================
+============================== 11 passed in 7.99s ==============================

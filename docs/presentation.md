@@ -25,6 +25,23 @@ Split des données : **60 % train / 20 % validation / 20 % test**
 
 ---
 
+## Slide 2b — Exploration des données (EDA)
+
+- Dataset parfaitement équilibré : 800k négatifs / 800k positifs
+- Tweets courts : majorité entre 5 et 15 mots
+
+![Équilibre des classes](screenshots/eda_class_balance.png)
+
+---
+
+## Slide 2c — Vocabulaire par sentiment
+
+Wordcloud des tweets positifs — le nettoyage (URLs, mentions, stopwords) fait ressortir le vocabulaire porteur de sentiment.
+
+![Wordcloud sentiments](screenshots/eda_wordclouds.png)
+
+---
+
 ## Slide 3 — Approche 1 : Modèles simples
 
 - TF-IDF (5000 features)

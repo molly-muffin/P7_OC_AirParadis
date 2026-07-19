@@ -1,3 +1,4 @@
-$ curl -X POST /predict
-{"sentiment":"positive","confidence":0.9278,"model":"distilbert_finetuned","prediction_id":"31b26a00-045a-43aa-8d3d-6f442f4eadc3"}
-{"sentiment":"negative","confidence":0.9245,"model":"distilbert_finetuned","prediction_id":"418a0c1b-aa48-46f9-956f-2419e1a188b7"}
+$ curl -X POST .../predict {"text":"I love flying with Air Paradis, amazing crew!"}
+{"sentiment":"positive","confidence":0.9748,"model":"cnn_lstm_glove","prediction_id":"d038c1f7-fdeb-49a5-a121-d9787f06b689"}
+$ curl -X POST .../predict {"text":"Worst flight ever, lost my luggage and rude staff"}
+{"sentiment":"negative","confidence":0.7213,"model":"cnn_lstm_glove","prediction_id":"72f2e712-500d-4ac0-978e-6f52bf50b05f"}
